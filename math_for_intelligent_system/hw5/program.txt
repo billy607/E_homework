@@ -1,0 +1,49 @@
+%Make sure I get a correct answer
+x = [1,2,3];
+correctConv = conv(x,x)
+myCircularConv = convolution(x,x)
+myFFT = fftConv(x,x)
+
+x1 = 0 + (1000-0).*rand(1000,1);
+x2 = 0 + (1000-0).*rand(1000,1);
+x3 = 0 + (1000-0).*rand(1000,1);
+x4 = 0 + (1000-0).*rand(1000,1);
+x5 = 0 + (1000-0).*rand(1000,1);
+y1 = 0 + (1000-0).*rand(1000,1);
+y2 = 0 + (1000-0).*rand(1000,1);
+y3 = 0 + (1000-0).*rand(1000,1);
+y4 = 0 + (1000-0).*rand(1000,1);
+y5 = 0 + (1000-0).*rand(1000,1);
+
+disp('speedup by using FFTs in numerical convolution')
+tic;fftConv(x1,y1);toc
+tic;fftConv(x2,y2);toc
+tic;fftConv(x3,y3);toc
+tic;fftConv(x4,y4);toc
+tic;fftConv(x5,y5);toc
+
+disp('speedup by using circular convolution')
+tic;convolution(x1',y1');toc
+tic;convolution(x2',y2');toc
+tic;convolution(x3',y3');toc
+tic;convolution(x4',y4');toc
+tic;convolution(x5',y5');toc
+
+%document the errors when do not empoly zero padding in FFT
+C1=conv(x1,y1);
+C1_err=fftConv_err(x1,y1);
+C2=conv(x2,y2);
+C2_err=fftConv_err(x2,y2);
+C3=conv(x3,y3);
+C3_err=fftConv_err(x3,y3);
+C4=conv(x4,y4);
+C4_err=fftConv_err(x4,y4);
+C5=conv(x5,y5);
+C5_err=fftConv_err(x5,y5);
+
+disp('size of correct convolution | size of FFT without zero padding')
+disp([size(conv(x1,y1)),size(fftConv_err(x1,y1));size(conv(x2,y2)),size(fftConv_err(x2,y2));size(conv(x3,y3)),size(fftConv_err(x3,y3));size(conv(x4,y4)),size(fftConv_err(x4,y4));size(conv(x5,y5)),size(fftConv_err(x5,y5));])
+
+disp('since the dimentions of FFT without zero padding is different from the correct convolution, FFT without zero padding cannot be correct for computing convolution')
+
+
